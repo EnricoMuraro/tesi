@@ -1,0 +1,126 @@
+%!TEX root = ../dissertation.tex
+
+\chapter{Il progetto di stage}
+Pietro Fiorentini sta sviluppando un sistema di auto-diagnostica per i Multiphase Flow Meter, con l'obiettivo di avere sistemi sempre più intelligenti che riescano a dare informazioni relativamente al loro stato di funzionamento e salute. 
+I dati raccolti da vari sensori presenti nei MPFM sono analizzati attraverso algoritmi di machine learning per identificare automaticamente eventuali anomalie o malfunzionamenti.
+Il progetto include la creazione di adeguate infrastrutture software per la gestione dei dati e la loro analisi, per poi poter applicare e valutare gli algoritmi di machine learning.
+
+\section{Piano di lavoro}
+Lo stage segue un piano di lavoro redatto prima dell'inizio dello stage dal tutor aziendale in collaborazione con lo stagista e approvato dal tutor universitario.
+Il piano di lavoro definisce gli obiettivi di ogni settimana di stage.
+
+\subsection{Settimana 1 - Analisi dei requisiti}
+
+\begin{itemize}
+	\item Incontro con persone coinvolte nel progetto Machine Learning per discutere i requisiti e le richieste relativamente al progetto e alla qualità del software
+	\item Verifica credenziali e strumenti di lavoro assegnati
+	\item Presa visione dell'infrastruttura esistente
+	\item Analisi dei requisiti, tenendo in considerazione il preesistente
+	\item Discussione e redazione del documento del "Requirement Specification"
+\end{itemize}
+Risultato: Documento "Requirement Specification" che raccoglie tutti i vincoli e requisiti del progetto.
+
+\subsection{Settimana 2 e 3 - Gestione dei dati}
+
+\begin{itemize}
+	\item Studio dei dati e delle informazioni a corredo (quando sono stati raccolti, dove, con quale strumento)
+	\item Studio delle infrastrutture per gestire i dati (DB, Data Warehouse, Data Lake, etc)
+	\item Creare struttura per gestire e  accedere facilmente ai dati, combinando tutte le informazioni disponibili
+\end{itemize}
+Risultato: Documento "Data Management Design" che spiega come implementare l'infrastruttura software per la gestione dei dati.
+
+\subsection{Settimana 4 e 5 - Analisi dei dati}
+
+\begin{itemize}
+	\item Studio del formato con cui sono salvati i dati (non standard, proprietario)
+	\item Librerie in Python per accedere al contenuto dei dati e poterli analizzare
+	\item Creare la struttura software per estrarre le informazioni dai dati e per creare grafici e analizzarli
+	\item Strumento o interfaccia per visualizzare e analizzare dati ricavati da fonti diverse
+\end{itemize}
+Risultato: Documento "Data Analytics Design" che descriva come implementare la lettura dei dati grezzi, creare grafici e analizzarli, creazione del software per interfacciarsi con i dati.
+
+\subsection{Settimana 6 - Feature extraction}
+
+\begin{itemize}
+	\item Studio di metodi per estrazione di caratteristiche dai dati e metriche per il confronto dei metodi, con lo scopo di rendere più semplice l’individuare anomalie
+	\item Implementazione e confronto dei vari metodi per estrarre caratteristiche
+\end{itemize}
+Risultato: Documento "Feature Extraction Design \& Report" che descriva i metodi di estrazione e il loro confronto e valutazione, creazione del software con i metodi implementati.
+
+\subsection{Settimana 7 - Anomaly detection}
+
+\begin{itemize}
+	\item Studio di modelli e algoritmi di machine learning per la rilevazione di anomalie, studio di metriche per il confronto
+	\item Valutazione e confronto dei modelli sui dati per identificare anomalie sulla base di metriche prestabilite
+\end{itemize}
+Risultato: Documento "Anomaly Detection Design \& Report" che descriva gli algoritmi di identificazione anomalie, il loro confronto e valutazione, creazione del software con gli algoritmi implementati
+
+\subsection{Settimana 8 - Conclusione}
+
+\begin{itemize}
+	\item Incontro con il team di Ricerca e Sviluppo per presentare e insegnare ad usare quanto prodotto
+	\item Live-demo di tutto il lavoro di stage
+\end{itemize}
+Risultato: Presentazione e live-demo
+
+\section{Obiettivi}
+
+\subsection{Obiettivi minimi}
+Documenti:
+\begin{itemize}
+	\item Requirement Specification: sezione "General Requirement"
+	\item Data Management Design: diagramma a blocchi dell'infrastruttura
+	\item Data Analytics Design: diagramma a blocchi dell'infrastruttura
+	\item Feature Extraction Design \& Report: descrizione di un solo metodo di
+	feature extraction
+	\item Anomaly Detection Design \& Report: due algoritmi di anomaly detection descritti e valutati
+	\item Presentazione finale
+\end{itemize}
+Software:
+\begin{itemize}
+	\item Database di gestione dei dati
+	\item Software per l'analisi dei dati (script per accedere ai dati)
+	\item Software per feature extraction, un solo metodo implementato
+	\item Software per anomaly detection, implementazione, confronto e valutazione di due algoritmi
+\end{itemize}
+
+\subsection{Obiettivi desiderabili}
+Tutti gli obiettivi minimi con le seguenti aggiunte o modifiche.
+
+Documenti:
+\begin{itemize}
+	\item Requirement Specification completo di informazioni per verificare e testare i
+	requisiti
+	\item Data Management Design completo
+	\item Data Analytics Design completo
+	\item Feature Extraction Design \& Report: descrizione di tre metodi di feature extraction, valutazione e confronto
+	\item Anomaly Detection Design \& Report: descrizione di cinque algoritmi di anomaly detection, valutazione e confronto
+	\item Presentazione finale e dimostrazione live del software sviluppato su un set di dati
+\end{itemize}
+Software:
+\begin{itemize}
+	\item Infrastruttura di gestione dati completamente implementata
+	\item Software per l'analisi dei dati completamente implementato
+	\item Software per feature extraction, confronto e valutazione di tre metodi
+	\item Software per anomaly detection, confronto e valutazione di cinque algoritmi
+\end{itemize}
+
+
+\section{Vincoli}
+Il progetto deve rispettare dei determinati vincoli imposti dall'azienda o dall'università
+
+\subsection{Vincoli temporali}
+L'università impone un vincolo temporale minimo di 300 ore di lavoro durante lo stage. Per questo motivo il progetto è stato diviso in 8 settimane, lavorando 40 ore a settimana per un totale massimo di 320 ore.
+
+\subsection{Vincoli metodologici}
+I documenti, il codice e i commenti scritti durante il progetto devono essere completamente in inglese.
+
+Tutto ciò che viene prodotto durante lo stage deve essere versionato nel repository Git fornito dall'azienda.
+
+L'azienda non ha definito altri vincoli metodologici, e ha dato libera scelta per gli strumenti di sviluppo. Come IDE è stato utilizzato PyCharm essendo uno degli IDE più completi per lo sviluppo in Python. GitKraken è stato usato come client di Git per facilitare il lavoro condiviso attraverso il repository fornito. Per la documentazione del codice è stato usato Sphinx, in modo da generare la documentazione automaticamente a partire dai commenti presenti nel codice.
+
+\subsection{Vincoli tecnologici}
+L'utilizzo di Python 3 come linguaggio di programmazione è stato fortemente consigliato dall'azienda vista la presenza di molte librerie per la visualizzazione dei dati e l'applicazione di feature extraction e anomaly detection.
+
+La scelta del database è stata libera, ma MySql è stato preferito in quanto già installato e funzionante all'interno dell'azienda.
+
