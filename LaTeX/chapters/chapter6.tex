@@ -8,7 +8,7 @@ Questo capitolo tratta l'addestramento di vari algoritmi di machine learning e l
 Nell'ambito del machine learning con feature extraction si intende l'estrazione di caratteristiche dai dati di ingresso per semplificare in seguito l'apprendimento.
 L'estrazione di feature è particolarmente utile quando il numero di dati in ingresso all'algoritmo di machine learning è molto alto, e renderebbe l'apprendimento troppo lungo e complesso.
 
-Nel caso del Multiphase Flow Meter alcuni dei sensori effettuano fino a 2500 letture al secondo, e in un solo minuto di registrazione si ottengono già 150000 valori per uno solo dei 20 o 30 sensori presenti nel MPFM.
+Nel caso del Multiphase Flow Meter alcuni dei sensori effettuano fino a 2500 letture al secondo, e in un solo minuto di registrazione si ottengono già 150000 valori per uno solo delle 20 o 30 variabili lette dai sensori presenti nel MPFM.
 Per questo motivo prima di allenare un algoritmo di machine learning bisogna estrarre alcune feature da questi dati.
 
 \subsection{tsfresh}
@@ -36,7 +36,7 @@ Esistono due tecniche principali di anomaly detection. L'anomaly detection super
 Le letture effettuate dei sensori durante i test non sono classificate quindi è necessario usare un approccio non supervisionato. 
 
 \subsection{scikit-learn e PyOD}
-Scikit-learn è una libreria che offre una vasta quantità di strumenti e funzioni per machine learning in Python, tra i quali implementazioni degli algoritmi più comuni, metodi per estrarre feature e normalizzare i dati e molto altro.
+scikit-learn è una libreria che offre una vasta quantità di strumenti e funzioni per machine learning in Python, tra i quali implementazioni degli algoritmi più comuni, metodi per estrarre feature e normalizzare i dati e molto altro.
 PyOD invece è una libreria più semplice, specifica per lavorare nel campo dell'anomaly detection e spesso sfrutta alcune delle funzionalità offerte da scikit-learn.
 
 Da queste librerie sono stati scelti 5 degli algoritmi più utilizzati per l'anomaly detection e sono stati valutati e confrontati tra loro.

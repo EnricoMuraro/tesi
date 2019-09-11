@@ -14,7 +14,7 @@ La ricerca deve essere sempre completa di tutte le sottocartelle in quanto i dat
 
 \begin{figure}
 	\includegraphics[width=\textwidth]{figures/ArchitetturaDMD}
-	\caption[Architettura sistema di gestione dei dai]{Architettura generale del sistema di gestione dei dati e le interazioni verso le componenti esterne al sistema. 
+	\caption[Architettura sistema di gestione dei dati]{Architettura generale del sistema di gestione dei dati e le interazioni verso le componenti esterne al sistema. 
 		\label{fig:ArchietturaDMD}}
 \end{figure}
 
@@ -22,7 +22,7 @@ La ricerca deve essere sempre completa di tutte le sottocartelle in quanto i dat
 
 \begin{figure}
 	\includegraphics[width=\textwidth]{figures/DiagrammaDelleClassiDMD}
-	\caption[Diagramma delle classi sistema di gestione dei dai]{Diagramma delle classi generale del sistema di gestione dei dati, rappresenta le dipendenze tra le classi senza entrare nei dettagli implementativi. 
+	\caption[Diagramma delle classi sistema di gestione dei dati]{Diagramma delle classi generale del sistema di gestione dei dati, rappresenta le dipendenze tra le classi senza entrare nei dettagli implementativi. 
 		\label{fig:DiagrammaDelleClassiDMD}}
 \end{figure}
 
@@ -45,7 +45,7 @@ DataExplorer è la classe usata per navigare il file system e sfrutta il metodo 
 
 StringUtils è una semplice classe di utilità che contiene delle funzionalità comuni per manipolare ed elaborare stringhe.
 
-PostresqlClient, MysqlClient e ClickhouseClient sono delle classi per la comunicazione con il database. Mysql è il database scelto dall'azienda quindi per ora MysqlClient è l'unico utilizzato, le altre due classi hanno la stessa interfaccia e possono essere intercambiate liberamente se si volesse utilizzare un database diverso.
+PostgresqlClient, MysqlClient e ClickhouseClient sono delle classi per la comunicazione con il database. Mysql è il database scelto dall'azienda quindi per ora MysqlClient è l'unico utilizzato, le altre due classi hanno la stessa interfaccia e possono essere intercambiate liberamente se si volesse utilizzare un database diverso.
 Tutti e tre i client offrono la possibilità di eseguire query SQL oppure creare tabelle e popolarle automaticamente attraverso il risultato ritornato da DataReader.
 
 
