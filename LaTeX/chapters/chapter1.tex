@@ -7,11 +7,31 @@
 Lo stage si è svolto presso l'azienda Pietro Fiorentini S.p.A nella sede principale di Arcugnano. Pietro Fiorentini realizza prodotti e servizi tecnologicamente avanzati per la distribuzione e l'utilizzo del petrolio e del gas naturale a livello globale, con undici stabilimenti nel mondo.
 L'azienda realizza prodotti come valvole, filtri, regolatori di pressione, ma lo stage si è interessato in particolare sui Multiphase Flow Meter.
 
-\section{Multiphase Flow Meter}
-Un Multiphase Flow Meter, o MPFM in breve, è un dispositivo utilizzato per misurare le singole portate delle fasi costitutive di un determitato flusso. In questo caso il flusso è una miscela di petrolio, acqua e gas creata durante il processo di estrazione dal pozzo petrolifero.
-I MPFM prodotti dalla Pietro Fiorentini sono strumenti non intrusivi per effettuare misurazioni in tempo reale del flusso  evitando l'uso di sistemi basati sulla separazione delle diverse fasi.
-
+\section{Multiphase Flow Meter} \label{multiphaseflowmeter}
+Un Multiphase Flow Meter, o MPFM in breve, è un dispositivo utilizzato per misurare le singole portate delle fasi costitutive di un determinato flusso. In questo caso il flusso è una miscela di petrolio, acqua e gas creata durante il processo di estrazione dal pozzo petrolifero.
+I MPFM prodotti dalla Pietro Fiorentini sono strumenti non intrusivi per effettuare misurazioni in tempo reale del flusso evitando l'uso di sistemi basati sulla separazione delle diverse fasi.
 Gli MPFM sono modulari e possono essere installati in diverse configurazioni, ogni modulo si occupa di effettuare una o più misurazioni sul flusso.
+
+La misurazione dei flussi multifase è un problema complesso e richiede la considerazione di molte possibili condizioni. In particolare ci sono molti regimi di scorrimento del flusso a seconda della velocità delle parti liquide e gassose \cite{multiphaseIntroduction}.
+
+I principali regimi di scorrimento sono:
+
+\begin{itemize}
+	\item{Bubble}: il gas è sospeso in bollicine all'interno del liquido, accade quando la parte liquida è più veloce di quella gassosa.
+	\item{Finely dispersed bubble}: il gas è sospeso in bollicine molto piccole all'interno del liquido.
+	\item{Slug}: il flusso è a intermittenza prevalentemente liquido e prevalentemente gassoso, formando delle grosse bolle di gas.
+	\item{Churn}: all'aumentare della velocità del gas il flusso diventa irregolare e la parte liquida sale e scende continuamente.
+	\item{Annular}: ad alte velocità del gas la parte liquida forma un anello intorno alle pareti della tubatura, e il gas scorre nel centro.
+\end{itemize}
+
+\begin{figure}
+	\includegraphics[width=\textwidth]{figures/flowtypes}
+	\caption[Tipologie di flusso multifase]{
+		I principali regimi di scorrimento del flusso multifase in base alla velocità della parte liquida e della parte gassosa \cite{multiphaseIntroduction}.
+		\label{fig:flowtypes}}
+\end{figure}
+
+L'irregolarità del flusso rende anche più difficile il riconoscimento delle anomalie nel funzionamento dello strumento. Dei valori che a prima vista sembrano anomali potrebbero semplicemente essere delle bolle più grosse di gas, oppure il passaggio improvviso a un altro regime di scorrimento. In questi casi le anomalie registrate fanno parte del funzionamento corretto dello strumento e non devono essere quindi considerati come valori anormali.
 
 \section{Struttura dei dati} \label{"StrutturaDeiDati"}
 I dati rilevanti al progetto riguardano una serie di test effettuati in vari laboratori negli ultimi dieci anni. I test consistono nell'uso di un Multiphase Flow Meter in un circuito chiuso, in modo da poter controllare accuratamente la composizione e le condizioni del flusso che viene fatto circolare. 

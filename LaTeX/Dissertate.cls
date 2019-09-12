@@ -150,7 +150,7 @@
 \renewcommand{\setthesection}{\arabic{chapter}.A\arabic{section}}
 
 % References.
-\renewcommand\bibname{References}
+\renewcommand\bibname{Bibliografia}
 %\RequirePackage[super,comma,numbers]{natbib}
 \RequirePackage[comma,numbers]{natbib}
 \renewcommand{\bibnumfmt}[1]{[#1]}
@@ -240,20 +240,20 @@
 	\maketitle
 	\frontispiece
 	\dedicationpage
-	\abstractpage
-	\sommario
+	%\abstractpage
+	%\sommario
 	\tableofcontents
 	\phantomsection
 	\clearpage
 
 	% figure listing - required if you have any figures
-	\addcontentsline{toc}{chapter}{List of figures}
+	\addcontentsline{toc}{chapter}{Elenco delle figure}
 	\listoffigures
 	\phantomsection
 	\cleardoublepage
 
 	% table listing - required if you have any tables
-	\addcontentsline{toc}{chapter}{List of tables}
+	\addcontentsline{toc}{chapter}{Elenco delle tabelle}
 	\listoftables
 	\phantomsection
 	\cleardoublepage

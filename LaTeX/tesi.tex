@@ -7,6 +7,10 @@
 \usepackage{tabularx}
 
 \begin{document}
+	
+\renewcommand{\contentsname}{Indice}
+\renewcommand{\listfigurename}{Elenco delle figure}
+\renewcommand{\listtablename}{Elenco delle tabelle}
 
 % the front matter
 \input{frontmatter/personalize}
@@ -22,6 +26,7 @@
 % \acknowledgments
 
 % \doublespacing
+
 \renewcommand{\figurename}{figura}
 % include each chapter...
 \setcounter{chapter}{0}  % start chapter numbering at 1
@@ -39,8 +44,8 @@
 \bibliography{references}
 \cleardoublepage
 \phantomsection
-\addcontentsline{toc}{chapter}{Acknowledgments}
-\acknowledgments
+%\addcontentsline{toc}{chapter}{Acknowledgments}
+%\acknowledgments
 
 
 % \clearpage

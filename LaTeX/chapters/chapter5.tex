@@ -3,7 +3,7 @@
 \label{AnalisiDeiDati}
 Ora che è presente un database popolato di tutti i metadati necessari per ricercare i file raw di interesse, il prossimo passo è leggere ed estrarre correttamente i dati dai file.
 
-Il sistema utilizza inoltre le librerie esterne matplotlib e plotly per produrre grafici, grafici di dispersione 2D e 3D, e istogrammi, allo scopo di visualizzare e studiare i dati estratti.
+Il sistema utilizza inoltre le librerie esterne matplotlib\cite{matplotlib} e plotly\cite{plotly} per produrre grafici, grafici di dispersione 2D e 3D, e istogrammi, allo scopo di visualizzare e studiare i dati estratti.
 
 \section{Archiettura generale}
 
@@ -22,7 +22,7 @@ Il sistema di analisi dei dati può essere diviso in due parti principali:
 
 
 \section{Lettura e contenuto dei file raw}
-I file sono creati attraverso LabVIEW, un programma della National Instruments che si occupa di gestire la lettura dei sensori, e non sono pensati per essere aperti con programmi esterni. Per questo motivo la lettura dei file raw diventa complessa attraverso solo l'uso di Python.
+I file sono creati attraverso LabVIEW\cite{labview}, un programma della National Instruments che si occupa di gestire la lettura dei sensori, e non sono pensati per essere aperti con programmi esterni. Per questo motivo la lettura dei file raw diventa complessa attraverso solo l'uso di Python.
 
 I file raw sono dei file binari che posso essere in uno dei formati proprietari BIN o BIX. Il formato influisce la struttura del file e come sono stati salvati i dati al suo interno.
 
@@ -83,8 +83,8 @@ Selezionando tre grafici si visualizza un grafico di dispersione in 3D delle tre
 		\label{fig:3Dscatter}}
 \end{figure}
 
-Ogni tipologia di grafico può essere visualizzata usando la libreria Matplotlib oppure Plotly in base a se si sono selezionai i grafici con shift o con ctrl. Si è lasciata la scelta perché entrambe le librerie hanno dei vantaggi e degli svantaggi a seconda del grafico che si vuole ottenere.
+Ogni tipologia di grafico può essere visualizzata usando la libreria matplotlib\cite{matplotlib} oppure plotly\cite{plotly} in base a se si sono selezionai i grafici con shift o con ctrl. Si è lasciata la scelta perché entrambe le librerie hanno dei vantaggi e degli svantaggi a seconda del grafico che si vuole ottenere.
 
-Matplotlib è molto veloce nella creazione del grafico ma con molti punti, intorno alle decine di migliaia, rallenta quando si prova a ingrandire, ruotare e selezionare una parte specifica del grafico.
-Plotly impiega un paio di minuti per la creazione del grafico perché genera una pagina HTML indipendente, ma la manipolazione del grafico risulta veloce anche nell'ordine delle centinaia di migliaia di punti. Inoltre, essendo i grafici file HTML veri e propri, possono essere salvati e visualizzati offline, mentre Matplotlib permette solo il salvataggio di un'immagine statica del grafico perdendo l'interattività.
+matplotlib è molto veloce nella creazione del grafico ma con molti punti, intorno alle decine di migliaia, rallenta quando si prova a ingrandire, ruotare e selezionare una parte specifica del grafico.
+plotly impiega un paio di minuti per la creazione del grafico perché genera una pagina HTML indipendente, ma la manipolazione del grafico risulta veloce anche nell'ordine delle centinaia di migliaia di punti. Inoltre, essendo i grafici file HTML veri e propri, possono essere salvati e visualizzati offline, mentre matplotlib permette solo il salvataggio di un'immagine statica del grafico perdendo l'interattività.
 

@@ -6,13 +6,13 @@ Questo capitolo tratta l'addestramento di vari algoritmi di machine learning e l
 
 \section{Feature extraction}
 Nell'ambito del machine learning con feature extraction si intende l'estrazione di caratteristiche dai dati di ingresso per semplificare in seguito l'apprendimento.
-L'estrazione di feature è particolarmente utile quando il numero di dati in ingresso all'algoritmo di machine learning è molto alto, e renderebbe l'apprendimento troppo lungo e complesso.
+L'estrazione di feature è particolarmente utile quando il numero di dati in ingresso all'algoritmo di machine learning è molto alto, e renderebbe l'apprendimento troppo lungo e complesso \cite{FeatureExtraction}.
 
 Nel caso del Multiphase Flow Meter alcuni dei sensori effettuano fino a 2500 letture al secondo, e in un solo minuto di registrazione si ottengono già 150000 valori per uno solo delle 20 o 30 variabili lette dai sensori presenti nel MPFM.
 Per questo motivo prima di allenare un algoritmo di machine learning bisogna estrarre alcune feature da questi dati.
 
 \subsection{tsfresh}
-tsfresh è la libreria utilizzata per l'estrazione di feature in quanto specifica per le serie temporali, ovvero serie dove i dati sono legati all'istante di tempo in qui sono stati osservati, come per le letture dei sensori del MPFM.
+tsfresh è la libreria utilizzata per l'estrazione di feature in quanto specifica per le serie temporali, ovvero serie dove i dati sono legati all'istante di tempo in qui sono stati osservati, come per le letture dei sensori del MPFM \cite{tsfresh}.
 
 tsfresh permette quindi di calcolare automaticamente un certo numero di feature su una serie temporale qualsiasi. Sono presenti più di 100 feature estraibili con tsfresh ma estrarle tutte richiederebbe troppo tempo e spesso risultano ridondanti in questo contesto.
 
@@ -31,31 +31,31 @@ Per non ripetere l'estrazione di feature ogni volta che si vuole applicare un al
 
 L'anomaly detection consiste nella identificazione di osservazioni o eventi che differiscono sostanzialmente dalla maggior parte degli altri dati. Nel contesto del Multiphase Flow meter queste anomalie nei dati possono corrispondere a dei problemi o difetti nello strumento o nei sensori stessi. Per questo motivo individuare le anomalie attraverso algoritmi di machine learning può essere utile per diagnosticare lo stato dello strumento, e in alcuni casi prevedere quando si sta per rompere prima che accada.
 
-Esistono due tecniche principali di anomaly detection. L'anomaly detection supervisionato richiede che i dati siano classificati come "normali" oppure "anormali" e sfrutta questa proprietà per classificare i nuovi dati dopo l'apprendimento. L'anomaly detection non supervisionato non richiede nessuna classificazione dei dati e assume che la maggior parte dei dati siano normali e cerca i punti  meno simili agli altri.
+Esistono due tecniche principali di anomaly detection. L'anomaly detection supervisionato richiede che i dati siano classificati come "normali" oppure "anormali" e sfrutta questa proprietà per classificare i nuovi dati dopo l'apprendimento. L'anomaly detection non supervisionato non richiede nessuna classificazione dei dati e assume che la maggior parte dei dati siano normali e cerca i punti  meno simili agli altri \cite{AnomalyDetection}.
 
 Le letture effettuate dei sensori durante i test non sono classificate quindi è necessario usare un approccio non supervisionato. 
 
 \subsection{scikit-learn e PyOD}
-scikit-learn è una libreria che offre una vasta quantità di strumenti e funzioni per machine learning in Python, tra i quali implementazioni degli algoritmi più comuni, metodi per estrarre feature e normalizzare i dati e molto altro.
-PyOD invece è una libreria più semplice, specifica per lavorare nel campo dell'anomaly detection e spesso sfrutta alcune delle funzionalità offerte da scikit-learn.
+scikit-learn è una libreria che offre una vasta quantità di strumenti e funzioni per machine learning in Python, tra i quali implementazioni degli algoritmi più comuni, metodi per estrarre feature e normalizzare i dati e molto altro \cite{scikit-learn}.
+PyOD invece è una libreria più semplice, specifica per lavorare nel campo dell'anomaly detection e spesso sfrutta alcune delle funzionalità offerte da scikit-learn \cite{zhao2019pyod}.
 
 Da queste librerie sono stati scelti 5 degli algoritmi più utilizzati per l'anomaly detection e sono stati valutati e confrontati tra loro.
 
 \subsection{Histogram-Based Outlier Detection (HBOS)}
-In questo algoritmo viene costruito un istogramma per ogni variabile e la combinazione di tutti gli istogrammi viene utilizzata per determinare quali punti sono "outlier" ovvero anomalie. Questo algoritmo assume che i data normali siano concentrati in una particolare zona e non performa altrettanto bene se i dati sono divisi in diversi cluster. In compenso è uno degli algoritmi più efficienti e classifica i dati in tempo lineare O(n) oppure O(n*log(n)) a seconda se il "bin size" è statico o dinamico.
+In questo algoritmo viene costruito un istogramma per ogni variabile e la combinazione di tutti gli istogrammi viene utilizzata per determinare quali punti sono "outlier" ovvero anomalie. Questo algoritmo assume che i data normali siano concentrati in una particolare zona e non performa altrettanto bene se i dati sono divisi in diversi cluster. In compenso è uno degli algoritmi più efficienti e classifica i dati in tempo lineare O(n) oppure O(n*log(n)) a seconda se il "bin size" è statico o dinamico \cite{HBOS}.
 
 \subsection{Isolation Forest}
-Isolation Forest è un algoritmo che si concentra su isolare le anomalie che sono definite come i punti più rari e isolati. In breve una foresta di alberi binari di ricerca è costruita seguendo un approccio che divide casualmente in due lo spazio dei punti. Ad ogni iterazione ogni parte è divisa a sua volta in due fino a quando contiene un solo punto. I punti più isolati saranno separati dagli altri in un minor numero di tagli e saranno quindi più vicini alla radice dell'albero binario. A tutti i punti viene quindi assegnato un punteggio in base alla loro altezza nell'albero, dove le anomalie avranno punteggio più alto in quanto sono più vicine alla radice e i punti normali un punteggio più basso in quanto più distanti dalla radice.
+Isolation Forest è un algoritmo che si concentra su isolare le anomalie che sono definite come i punti più rari e isolati. In breve una foresta di alberi binari di ricerca è costruita seguendo un approccio che divide casualmente in due lo spazio dei punti. Ad ogni iterazione ogni parte è divisa a sua volta in due fino a quando contiene un solo punto. I punti più isolati saranno separati dagli altri in un minor numero di tagli e saranno quindi più vicini alla radice dell'albero binario. A tutti i punti viene quindi assegnato un punteggio in base alla loro altezza nell'albero, dove le anomalie avranno punteggio più alto in quanto sono più vicine alla radice e i punti normali un punteggio più basso in quanto più distanti dalla radice \cite{IF}.
 
 
 \subsection{K-Nearest Neighbors (KNN)}
-Questo algoritmo si basa sulla distanza di ogni punto dai suoi k punti più vicini per determinare gli "inlier" e gli "outlier" ovvero i punti normali e le anomalie. La distanza di un punto dai suoi vicini è usata quindi per dare un punteggio di quanto anomalo è il punto stesso.
+Questo algoritmo si basa sulla distanza di ogni punto dai suoi k punti più vicini per determinare gli "inlier" e gli "outlier" ovvero i punti normali e le anomalie. La distanza di un punto dai suoi vicini è usata quindi per dare un punteggio di quanto anomalo è il punto stesso \cite{KNN}.	
 
 \subsection{Local Outlier Factor (LOF)}
-Local Outlier Factor è un algoritmo basato sul confronto tra la densità di un punto e la densità dei suoi punti più vicini. Considera quindi come outlier i punti che hanno minor densità rispetto ai loro punti più vicini. La località dell'algoritmo permette di riconoscere anomalie che non sarebbero considerate da altri algoritmi, ma questo approccio spesso è applicabile solo a spazi di dati con poche dimensioni.
+Local Outlier Factor è un algoritmo basato sul confronto tra la densità di un punto e la densità dei suoi punti più vicini. Considera quindi come outlier i punti che hanno minor densità rispetto ai loro punti più vicini. La località dell'algoritmo permette di riconoscere anomalie che non sarebbero considerate da altri algoritmi, ma questo approccio spesso è applicabile solo a spazi di dati con poche dimensioni \cite{LOF}.
 
 \subsection{Principal Component Analysis (PCA)}
-A differenza dell'Isolation Forest questo metodo cerca di classificare gli "inlier" e considera i punti rimanenti come anomalie. Spesso è utilizzato quando si lavora con spazi di dati a molte dimensioni, oppure quando il numero di anomalie è basso e classificarle risulta più difficile di classificare i punti normali. PCA determina quale caratterista ha il maggior impatto sulla varianza dei dati, ovvero determina le componenti principali.
+A differenza dell'Isolation Forest questo metodo cerca di classificare gli "inlier" e considera i punti rimanenti come anomalie. Spesso è utilizzato quando si lavora con spazi di dati a molte dimensioni, oppure quando il numero di anomalie è basso e classificarle risulta più difficile di classificare i punti normali. PCA determina quale caratterista ha il maggior impatto sulla varianza dei dati, ovvero determina le componenti principali \cite{PCA}.
 
 \subsection{Addestramento e confronto} \label{AddestramentoEConfronto}
 
@@ -134,3 +134,19 @@ Nella figura \ref{fig:vis4} il grafico mostra la classificazione degli outlier c
 		
 		\label{fig:vis4}}
 \end{figure}
+
+
+\subsection{Visualizzazione della decision surface}
+La decision surface divide la superficie in più zone, ognuna delle quali rappresenta la probabilità che un punto in quella zona sia un'anomalia. Come si vede in figura \ref{fig:decision_surface} le zone rosse indicano che un punto in quelle zone è molto probabilmente un'anomalia, punti nelle zone blu sono comunque classificati come outlier ma è probabile che non lo siano. 
+
+La linea tratteggiata rossa rappresenta la "decision boundary" ovvero il perimetro all'interno del quale i punti sono classificati come inlier. Per visualizzare meglio la decision surface, in figura \ref{fig:decision_surface} viene mostrata solo una parte del set di dati usato. 
+
+Inoltre si possono notare le differenze tra i cinque algoritmi in base alle decision surface che generano, ad esempio PCA estrae le due componenti principali e forma quindi un ovale, oppure HBOS genera una superficie squadrata perché considera gli istogrammi di frequenza dei due assi.
+
+\begin{figure} [H]
+	\includegraphics[width=\textwidth]{figures/decision_surface}
+	\caption[Decision surface degli algoritmi]{Decision surface dei cinque algoritmi, le zone rosse indicano che un punto in quelle zone è molto probabilmente un'anomalia, punti nelle zone blu sono comunque classificati come outlier ma è meno probabile che lo siano. I punti all'interno della linea tratteggiata rossa sono inlier.
+		
+		\label{fig:decision_surface}}
+\end{figure}
+
