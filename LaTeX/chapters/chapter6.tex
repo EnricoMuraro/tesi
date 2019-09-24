@@ -8,23 +8,38 @@ Questo capitolo tratta l'addestramento di vari algoritmi di machine learning e l
 Nell'ambito del machine learning con feature extraction si intende l'estrazione di caratteristiche dai dati di ingresso per semplificare in seguito l'apprendimento.
 L'estrazione di feature è particolarmente utile quando il numero di dati in ingresso all'algoritmo di machine learning è molto alto, e renderebbe l'apprendimento troppo lungo e complesso \cite{FeatureExtraction}.
 
-Nel caso del Multiphase Flow Meter alcuni dei sensori effettuano fino a 2500 letture al secondo, e in un solo minuto di registrazione si ottengono già 150000 valori per uno solo delle 20 o 30 variabili lette dai sensori presenti nel MPFM.
-Per questo motivo prima di allenare un algoritmo di machine learning bisogna estrarre alcune feature da questi dati.
+A seconda dei dati e il loro contesto ci sono molti metodi di estrazione di feature. Per le immagini si usano algoritmi che cercano e riconoscono caratteristiche come linee, angoli e contorni all'interno della figura e queste caratteristiche vengono usate per il machine learning invece dell'immagine completa che spesso contiene molte informazioni ridondanti o poco utili, che rallenterebbero o renderebbero impossibile l'apprendimento.
 
-\subsection{tsfresh}
-tsfresh è la libreria utilizzata per l'estrazione di feature in quanto specifica per le serie temporali, ovvero serie dove i dati sono legati all'istante di tempo in qui sono stati osservati, come per le letture dei sensori del MPFM \cite{tsfresh}.
+I dati letti dai sensori del MPFM sono invece una serie temporale, ovvero una serie dove i dati sono legati all'istante di tempo in qui sono stati osservati, in questo caso alcune delle feature che si possono estrarre sono minimo e massimo globale, numero di "picchi" ovvero minimi e massimi locali, media, mediana, varianza, deviazione standard. In questo modo si riduce il numero di dati da centinaia di migliaia di punti a un decina di caratteristiche fondamentali che riassumono adeguatamente cosa è accaduto in quella particolare porzione di tempo.  
+
+Nel caso del Multiphase Flow Meter alcuni dei sensori effettuano fino a 2500 letture al secondo, e in un solo minuto di registrazione si ottengono già 150000 valori per uno solo delle 20 o 30 variabili lette dai sensori presenti nel MPFM. Per questo motivo prima di allenare un algoritmo di machine learning bisogna estrarre alcune delle feature più rilevanti da questi dati. 
+
+\subsection{tsfresh} \label{tsfresh}
+tsfresh è la libreria utilizzata per l'estrazione di feature in quanto specifica per le serie temporali, come per le letture dei sensori del MPFM \cite{tsfresh}.
 
 tsfresh permette quindi di calcolare automaticamente un certo numero di feature su una serie temporale qualsiasi. Sono presenti più di 100 feature estraibili con tsfresh ma estrarle tutte richiederebbe troppo tempo e spesso risultano ridondanti in questo contesto.
 
 \begin{figure}
 	\includegraphics[width=\textwidth]{figures/tsfresh_features}
-	\caption[Esempio di features estratte dalla libreria tsfresh]{ Esempio di alcune features estraibili da una serie temporale attraverso la libreria tsfresh
+	\caption[Esempio di feature estratte dalla libreria tsfresh]{ Esempio di alcune feature estraibili da una serie temporale attraverso la libreria tsfresh
 		
 		\label{fig:tsfresh_features}}
 \end{figure}
 
-Si è scelto quindi un set ridotto di feature che comprende solamente il minimo, massimo, media, mediana, deviazione standard e varianza di ogni minuto di dati per ogni sensore. In questo modo il tempo di estrazione si riduce drasticamente, ma rimane comunque notevole quando lo si deve applicare a più file raw per avere un insieme di dati sufficiente per l'apprendimento.
+Si è scelto quindi un set ridotto di feature che comprende solamente le seguenti caratteristiche per ogni minuto di letture di dati:
 
+\begin{itemize}
+	\item Minimo
+	\item Massimo
+	\item Media
+	\item Mediana
+	\item Deviazione standard
+	\item Varianza
+\end{itemize}
+
+Minimi e massimi permettono di riconoscere valori troppo alti o bassi per essere letture reali sullo stato del flusso, ad esempio letture di pressione e temperature che risultano fisicamente impossibili e possono essere quindi categorizzate come anomalie nel funzionamento dello strumento. Media e mediana forniscono un punto di riferimento sui valori normali per quel minuto di lettura. Deviazione standard e varianza possono dare informazioni sul regime del flusso, varianza molto alta potrebbe essere causata da un flusso turbolento dove i valori letti cambiano notevolmente da secondo a secondo, allo stesso modo bassa varianza può indicare un flusso più costante.
+
+Inoltre selezionando solo 6 feature il tempo di estrazione si riduce drasticamente, ma rimane comunque notevole quando lo si deve applicare per ogni minuto di lettura in migliaia di file raw.
 Per non ripetere l'estrazione di feature ogni volta che si vuole applicare un algoritmo di machine learning, è stata effettuata l'estrazione delle feature di tutte le variabili di tutti i file raw una volta sola e il risultato è stato salvato in una tabella apposita nel database. Questo processo ha richiesto circa 8 ore per il completamento, ma una volta presenti nel database le feature si possono ottenere istantaneamente.
 
 \section{Anomaly detection}
@@ -36,8 +51,8 @@ Esistono due tecniche principali di anomaly detection. L'anomaly detection super
 Le letture effettuate dei sensori durante i test non sono classificate quindi è necessario usare un approccio non supervisionato. 
 
 \subsection{scikit-learn e PyOD}
-scikit-learn è una libreria che offre una vasta quantità di strumenti e funzioni per machine learning in Python, tra i quali implementazioni degli algoritmi più comuni, metodi per estrarre feature e normalizzare i dati e molto altro \cite{scikit-learn}.
-PyOD invece è una libreria più semplice, specifica per lavorare nel campo dell'anomaly detection e spesso sfrutta alcune delle funzionalità offerte da scikit-learn \cite{zhao2019pyod}.
+scikit-learn\cite{scikit-learn} è una libreria che offre una vasta quantità di strumenti e funzioni per machine learning in Python, tra i quali implementazioni degli algoritmi più comuni, metodi per estrarre feature e normalizzare i dati e molto altro.
+PyOD\cite{zhao2019pyod} invece è una libreria più semplice, specifica per lavorare nel campo dell'anomaly detection e spesso sfrutta alcune delle funzionalità offerte da scikit-learn.
 
 Da queste librerie sono stati scelti 5 degli algoritmi più utilizzati per l'anomaly detection e sono stati valutati e confrontati tra loro.
 
@@ -49,17 +64,25 @@ Isolation Forest è un algoritmo che si concentra su isolare le anomalie che son
 
 
 \subsection{K-Nearest Neighbors (KNN)}
-Questo algoritmo si basa sulla distanza di ogni punto dai suoi k punti più vicini per determinare gli "inlier" e gli "outlier" ovvero i punti normali e le anomalie. La distanza di un punto dai suoi vicini è usata quindi per dare un punteggio di quanto anomalo è il punto stesso \cite{KNN}.	
+Questo algoritmo si basa sulla distanza di ogni punto dai suoi k punti più vicini per determinare gli "inlier" e gli "outlier" ovvero i punti normali e le anomalie\cite{KNN}. Il punteggio di anomalia può essere calcolato attraverso tre metodi differenti: 	
+\begin{itemize}
+	\item "largest": usa la distanza maggiore tra tutti i k vicini come punteggio di anomalia
+	\item "mean": usa la media delle distanze dai k vicini come punteggio di anomalia
+	\item "median" usa la mediana delle distanze dai k vicini come punteggio di anomalia
+\end{itemize}
+Sono state effettuate più prove con configurazioni diverse di questo algoritmo, la più efficace per riconoscere le anomalie nei dati dei sensori e quella che è stata utilizzata nei confronti tra gli algoritmi è stata utilizzare 5 vicini e calcolare il punteggio attraverso il metodo "largest".
 
 \subsection{Local Outlier Factor (LOF)}
-Local Outlier Factor è un algoritmo basato sul confronto tra la densità di un punto e la densità dei suoi punti più vicini. Considera quindi come outlier i punti che hanno minor densità rispetto ai loro punti più vicini. La località dell'algoritmo permette di riconoscere anomalie che non sarebbero considerate da altri algoritmi, ma questo approccio spesso è applicabile solo a spazi di dati con poche dimensioni \cite{LOF}.
+Local Outlier Factor è un algoritmo basato sul confronto tra la densità di un punto e la densità dei suoi punti più vicini. Considera quindi come outlier i punti che hanno minor densità rispetto ai loro punti più vicini. Similarmente a KNN la densità è calcolata in base alla distanza di un punto ai suoi vicini, solo che il punteggio di anomalia non viene ricavato dalla distanza stessa, ma da quanto diversa è la densità del punto rispetto alle densità dei suoi k vicini.
+La località dell'algoritmo permette di riconoscere anomalie che non sarebbero considerate da altri algoritmi, ma questo approccio spesso è applicabile solo a spazi di dati con poche dimensioni \cite{LOF}.
+Il valore di k scelto per questo algoritmo è 20, in base a più prove con valori più o meno alti che hanno ottenuto risultati simili o peggiori.
 
 \subsection{Principal Component Analysis (PCA)}
 A differenza dell'Isolation Forest questo metodo cerca di classificare gli "inlier" e considera i punti rimanenti come anomalie. Spesso è utilizzato quando si lavora con spazi di dati a molte dimensioni, oppure quando il numero di anomalie è basso e classificarle risulta più difficile di classificare i punti normali. PCA determina quale caratterista ha il maggior impatto sulla varianza dei dati, ovvero determina le componenti principali \cite{PCA}.
 
 \subsection{Addestramento e confronto} \label{AddestramentoEConfronto}
 
-Per l'addestramento degli algoritmi sono state utilizzate le feature estratte in precedenza e caricate nel database. In particolare queste feature sono: massimo, minimo, media, mediana, varianza, deviazione standard di un minuto di dati. Ogni confronto è stato ripetuto per 3 variabili differenti, in particolare sono state utilizzate C1\_V71\_0 che misura la capacità del fluido, C1\_V71\_1 che misura la resistenza del fluido, e NIR\_S1 che è uno dei sensori che misura il WLR.
+Per l'addestramento degli algoritmi sono state utilizzate le feature estratte in precedenza e caricate nel database. Si ricorda che le feature scelte in sezione \ref{tsfresh} sono: massimo, minimo, media, mediana, varianza, deviazione standard di un minuto di dati. Ogni confronto è stato ripetuto per 3 variabili differenti, in particolare sono state utilizzate C1\_V71\_0 che misura la capacità del fluido, C1\_V71\_1 che misura la resistenza del fluido, e NIR\_S1 che è uno dei sensori che misura il WLR.
 Per la variabile C1\_V71\_0 sono stati utilizzati 5369 minuti di dati, questo numero corrisponde quindi al numero di sample usato nell'apprendimento. Per la variabile C1\_V71\_1 invece sono stati utilizzati 1122 sample, e infine per NIR\_S1 7267 sample.
 La dimensione dei dati dipende dal numero di feature utilizzate, in questo caso è 6 per tutte e tre le variabili.
 
